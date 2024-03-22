@@ -1,0 +1,23 @@
+﻿@model List<Medicine>
+@{
+    ViewData["Title"] = "Мед.препараты";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table>
+    <tr>
+        <th>Наименование</th>
+        <th>Склад</th>
+        <th>Количество</th>
+    </tr>
+
+    @foreach (var medicine in Model)
+    {
+            <tr>
+                <td>@medicine.Name</td>
+                <td>@medicine.Storage</td>
+                <td>@medicine.Count</td>
+            </tr>
+    }
+</table>

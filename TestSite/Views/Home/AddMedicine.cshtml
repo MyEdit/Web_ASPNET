@@ -1,0 +1,26 @@
+﻿@model Medicine
+@{
+    ViewData["Title"] = "Добавление мед.препарата";
+}
+<h1>@ViewData["Title"]</h1>
+<form method="post" asp-controller="Home" asp-action="add">
+    <p>
+        <label asp-for="Name"></label>
+        <input asp-for="Name"/>
+        <span asp-validation-for="Name"></span>
+    </p>
+
+    <p>
+        <label asp-for="Storage"></label>
+        <input asp-for="Storage"/>
+        <span asp-validation-for="Storage"></span>
+    </p>
+
+    <p>
+        <label asp-for="Count"></label>
+        <input asp-for="Count"/>
+        <span asp-validation-for="Count"></span>
+    </p>
+
+    <input type="submit" value="Отправить"/>
+</form>
