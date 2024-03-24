@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TestSite.Models;
+using TestSite.Utils;
 
 namespace TestSite.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        APIManager APIManager = new();
+        public static ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -23,28 +25,27 @@ namespace TestSite.Controllers
             return View();
         }
 
-        public ViewResult GetMedicines()
+        public async Task<ViewResult> GetMedicines()
         {
-            Medicine medicine = new("A1", "A1", 1);
-            Medicine medicine2 = new("A2", "A2", 2);
-            Medicine medicine3 = new("A3", "A3", 3);
-
-            List<Medicine> list = new List<Medicine>
-            {
-                medicine, medicine2, medicine3
-            };
-
-            return View(list);
+            return View(await APIManager.getMedicines());
         }
 
         [HttpPost]
-        public IActionResult add(Medicine medicine)
+        public async Task<IActionResult> add(Medicine medicine)
         {
             if (ModelState.IsValid)
             {
+                medicine.ConvertImageToBase64String();
+
+                _logger.LogInformation(medicine.Name);
+                _logger.LogInformation(medicine.Storage);
+                _logger.LogInformation(medicine.Count.ToString());
+                _logger.LogInformation(medicine.ID.ToString());
+                _logger.LogInformation(medicine.Photo);
+
+                await APIManager.createMedicine(medicine);
                 return Redirect("/");
             }
-
             return View("AddMedicine");
         }
 

@@ -16,11 +16,12 @@ namespace TestSite.Utils
 
     public class APIManager
     {
-        private static readonly HttpClient client = new();
+        private static HttpClient client = null;
         private static readonly string API_URL = "http://192.168.0.105:5016/api/Medicines/";
 
         public APIManager()
         {
+            client = new();
             client.BaseAddress = new Uri(API_URL);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -39,8 +40,6 @@ namespace TestSite.Utils
                 return false;
             }
         }
-
-        //
 
         private async Task<object> executeRequest<T>(HttpRequestType requestType, string request, Medicine medicine = null)
         {

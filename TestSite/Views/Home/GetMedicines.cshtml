@@ -7,17 +7,26 @@
 
 <table>
     <tr>
+        <th>ID</th>
         <th>Наименование</th>
         <th>Склад</th>
         <th>Количество</th>
+        <th>Фото</th>
     </tr>
 
     @foreach (var medicine in Model)
     {
             <tr>
+                <td>@medicine.ID</td>
                 <td>@medicine.Name</td>
                 <td>@medicine.Storage</td>
                 <td>@medicine.Count</td>
+                @if (!string.IsNullOrEmpty(medicine.Photo)) {
+                    <td><img src="data:image/jpeg;base64,@medicine.Photo" alt="Image from byte array" width="200" height="200"></td>
+                }
+                else {
+                    <td>Отсутствует</td>
+                }
             </tr>
     }
 </table>
